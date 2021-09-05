@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TemperatureReporter.App.Controller
 {
@@ -9,11 +6,17 @@ namespace TemperatureReporter.App.Controller
     [Route("cpu")]
     public class CpuMeasurementController : ControllerBase
     {
+        private readonly IMeasurer measurer;
+
+        public CpuMeasurementController(IMeasurer measurer)
+        {
+            this.measurer = measurer;
+        }
+
         [HttpGet]
-        [Route("get")]
         public IActionResult Index()
         {
-            return Ok("Hello!");
+            return Ok(measurer.Get());
         }
     }
 }
