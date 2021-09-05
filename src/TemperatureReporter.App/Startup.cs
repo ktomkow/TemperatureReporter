@@ -8,13 +8,27 @@ namespace TemperatureReporter.App
 {
     public class Startup
     {
+        private readonly IWebHostEnvironment env;
+
         public IConfiguration Configuration { get; private set; }
+
+        public Startup(IWebHostEnvironment env)
+        {
+            this.env = env;
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
 
-            services.AddSingleton<IMeasurer, Measurer>();
+            if(env.IsDevelopment())
+            {
+                services.AddSingleton<IMeasurer, FakeMeasurer>();
+            }
+            else
+            {
+                services.AddSingleton<IMeasurer, Measurer>();
+            }
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
