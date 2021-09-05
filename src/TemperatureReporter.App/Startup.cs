@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StackExchange.Redis.Extensions.Core.Configuration;
+using StackExchange.Redis.Extensions.Newtonsoft;
 
 namespace TemperatureReporter.App
 {
@@ -20,8 +22,12 @@ namespace TemperatureReporter.App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddStackExchangeRedisExtensions<NewtonsoftSerializer>((options) =>
+            {
+                return Configuration.GetSection("Redis").Get<RedisConfiguration>();
+            });
 
-            if(env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 services.AddSingleton<IMeasurer, FakeMeasurer>();
             }
