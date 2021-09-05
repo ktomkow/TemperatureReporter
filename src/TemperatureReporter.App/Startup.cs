@@ -15,8 +15,9 @@ namespace TemperatureReporter.App
 
         public IConfiguration Configuration { get; private set; }
 
-        public Startup(IWebHostEnvironment env)
+        public Startup(IConfiguration Configuration, IWebHostEnvironment env)
         {
+            this.Configuration = Configuration;
             this.env = env;
         }
 
@@ -25,7 +26,8 @@ namespace TemperatureReporter.App
             services.AddControllers();
             services.AddStackExchangeRedisExtensions<NewtonsoftSerializer>((options) =>
             {
-                return Configuration.GetSection("Redis").Get<RedisConfiguration>();
+                var configSection = Configuration.GetSection("Redis");
+                return configSection.Get<RedisConfiguration>();
             });
 
             if (env.IsDevelopment())

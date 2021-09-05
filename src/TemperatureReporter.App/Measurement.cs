@@ -7,6 +7,11 @@ namespace TemperatureReporter.App
         public double Temperature { get; }
         public DateTime At { get; }
 
+        protected Measurement()
+        {
+
+        }
+
         public Measurement(double temperature)
         {
             Temperature = temperature;

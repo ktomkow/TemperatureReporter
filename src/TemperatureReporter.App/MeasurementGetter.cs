@@ -21,6 +21,7 @@ namespace TemperatureReporter.App
             if(measurement is null)
             {
                 measurement = this.measurer.Get();
+                await this.cache.Set(measurement);
             }
 
             return measurement;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace TemperatureReporter.App.Controller
 {
@@ -6,17 +7,17 @@ namespace TemperatureReporter.App.Controller
     [Route("cpu")]
     public class CpuMeasurementController : ControllerBase
     {
-        private readonly IMeasurer measurer;
+        private readonly MeasurementGetter measurer;
 
-        public CpuMeasurementController(IMeasurer measurer)
+        public CpuMeasurementController(MeasurementGetter measurer)
         {
             this.measurer = measurer;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return Ok(measurer.Get());
+            return Ok(await measurer.Get());
         }
     }
 }
