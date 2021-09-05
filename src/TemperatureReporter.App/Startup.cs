@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StackExchange.Redis.Extensions.Core.Configuration;
 using StackExchange.Redis.Extensions.Newtonsoft;
+using TemperatureReporter.App.Store;
 
 namespace TemperatureReporter.App
 {
@@ -35,6 +36,9 @@ namespace TemperatureReporter.App
             {
                 services.AddSingleton<IMeasurer, Measurer>();
             }
+
+            services.AddSingleton<MeasurementRedisCache>();
+            services.AddSingleton<MeasurementGetter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
