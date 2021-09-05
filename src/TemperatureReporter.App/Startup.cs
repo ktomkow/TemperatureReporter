@@ -41,6 +41,8 @@ namespace TemperatureReporter.App
 
             services.AddSingleton<MeasurementRedisCache>();
             services.AddSingleton<MeasurementGetter>();
+
+            services.AddHostedService<MeasurerRecorder>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
