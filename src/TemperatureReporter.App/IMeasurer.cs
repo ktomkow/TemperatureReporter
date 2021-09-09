@@ -2,6 +2,6 @@
 {
     public interface IMeasurer
     {
-        Measurement Get();
+        CpuMeasurement Get();
     }
 }

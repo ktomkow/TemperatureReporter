@@ -13,11 +13,11 @@ namespace TemperatureReporter.App
             this.measurer = new CpuTemperature();
         }
 
-        public Measurement Get()
+        public CpuMeasurement Get()
         {
             double temperature = measurer.Temperature.DegreesCelsius;
 
-            return new Measurement(temperature);
+            return new CpuMeasurement(temperature);
         }
     }
 }

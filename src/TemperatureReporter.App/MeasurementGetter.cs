@@ -14,9 +14,9 @@ namespace TemperatureReporter.App
             this.cache = cache;
         }
 
-        public async Task<Measurement> Get()
+        public async Task<CpuMeasurement> Get()
         {
-            Measurement measurement = await this.cache.Get();
+            CpuMeasurement measurement = await this.cache.Get();
 
             if(measurement is null)
             {

@@ -11,14 +11,14 @@ namespace TemperatureReporter.App.Store
 
         private IRedisDatabase redisDb => redis.GetDbFromConfiguration();
 
-        private const string Key = nameof(Measurement);
+        private const string Key = nameof(CpuMeasurement);
 
         public MeasurementRedisCache(IRedisCacheClient redis)
         {
             this.redis = redis;
         }
 
-        public async Task<Measurement> Get()
+        public async Task<CpuMeasurement> Get()
         {
             MeasurementCacheModel cacheModel = await this.redisDb.GetAsync<MeasurementCacheModel>(Key);
 
@@ -27,12 +27,12 @@ namespace TemperatureReporter.App.Store
                 return null;
             }
 
-            Measurement result = cacheModel.Map();
+            CpuMeasurement result = cacheModel.Map();
 
             return result;
         }
 
-        public async Task Set(Measurement input)
+        public async Task Set(CpuMeasurement input)
         {
             if(await this.redisDb.ExistsAsync(Key))
             {
@@ -48,17 +48,17 @@ namespace TemperatureReporter.App.Store
             public double Temperature { get; set; }
             public DateTime At { get; set; }
 
-            public Measurement Map()
+            public CpuMeasurement Map()
             {
-                Measurement measurement = new Measurement(this.Temperature);
+                CpuMeasurement measurement = new CpuMeasurement(this.Temperature);
 
-                FieldInfo field = typeof(Measurement).GetField("<At>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
+                FieldInfo field = typeof(CpuMeasurement).GetField("<At>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
                 field.SetValue(measurement, this.At);
 
                 return measurement;
             }
 
-            public static MeasurementCacheModel Map(Measurement measurement)
+            public static MeasurementCacheModel Map(CpuMeasurement measurement)
             {
                 MeasurementCacheModel cacheModel = new MeasurementCacheModel()
                 {

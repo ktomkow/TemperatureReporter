@@ -25,7 +25,7 @@ namespace TemperatureReporter.App
             {
                 if (!stoppingToken.IsCancellationRequested)
                 {
-                    Measurement measurement = this.measurer.Get();
+                    CpuMeasurement measurement = this.measurer.Get();
                     await this.cache.Set(measurement);
 
                     await Task.Delay(5000);

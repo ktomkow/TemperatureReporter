@@ -11,11 +11,11 @@ namespace TemperatureReporter.App
             this.random = new Random();
         }
 
-        public Measurement Get()
+        public CpuMeasurement Get()
         {
             int randInt = this.random.Next(40, 80);
 
-            return new Measurement(randInt + this.random.NextDouble());
+            return new CpuMeasurement(randInt + this.random.NextDouble());
         }
     }
 }
